@@ -4,10 +4,12 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.example.todo.config.app.TodoDomainConfig;
+import org.springframework.stereotype.Repository;
+
 import com.example.todo.domain.model.Todo;
 
-public class TodoRepositoryImply implements TodoRepository {
+@Repository
+public class TodoRepositoryImpl implements TodoRepository {
     private static final Map<String, Todo> TODO_MAP = new ConcurrentHashMap<String, Todo>();
 
     @Override
@@ -22,7 +24,7 @@ public class TodoRepositoryImply implements TodoRepository {
 
     @Override
     public void create(Todo todo) {
-        TODO_MAP.get(todo.getTodoId());
+        TODO_MAP.put(todo.getTodoId(), todo);
     }
 
     @Override

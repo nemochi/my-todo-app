@@ -54,6 +54,21 @@ public class TodoServiceImpl implements TodoService {
     }
 
     @Override
+    public Todo finish(String todoId) {
+        Todo todo = findOne(todoId);
+        if (todo.isFinished()) {
+            ResultMessages messages = ResultMessages.error();
+            messages.add(ResultMessage.fromText(
+                    "[E002] The requested Todo is already finished. (id="
+                            + todoId + ")"));
+            throw new BusinessException(messages);
+        }
+        todo.setFinished(true);
+        todoRepository.update(todo);
+        return todo;
+    }
+
+    @Override
     public void delete(String todoId) {
         Todo todo = findOne(todoId);
         todoRepository.delete(todo);
